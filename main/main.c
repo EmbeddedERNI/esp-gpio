@@ -23,13 +23,16 @@ void app_main(void)
     {
         if(ESP_OK!=gpio_config(&g_gpio_config[i]))
         {
-            
+            printf("ERROR during gpio_config for 0x%016llX mask!\n", g_gpio_config[i].pin_bit_mask); 
         }
     }
 
     for (i=0;;i=!i) 
     {
-        gpio_set_level(GPIO_NUM_23, i);
+        if(ESP_OK!=gpio_set_level(GPIO_NUM_23, i))
+        {
+            printf("ERROR during gpio_set_level for pin #%u!\n", GPIO_NUM_23 ); 
+        }
         vTaskDelay(500 / portTICK_PERIOD_MS);
     }
 }
